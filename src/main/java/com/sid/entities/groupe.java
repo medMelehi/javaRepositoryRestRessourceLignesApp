@@ -1,12 +1,15 @@
 package com.sid.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
@@ -17,6 +20,8 @@ public class groupe implements Serializable {
 	   private String nom;
 	   @Temporal(TemporalType.DATE)
 	   private Date dateIn;
+	   @OneToMany(mappedBy="groupe",fetch=FetchType.LAZY)
+		private Collection<ligne> lignes; 
 	
 	   public groupe(String matricule, String nom, Date dateIn) {
 		super();
@@ -24,6 +29,15 @@ public class groupe implements Serializable {
 		this.nom = nom;
 		this.dateIn = dateIn;
 	}
+	   
+	public Collection<ligne> getLignes() {
+		return lignes;
+	}
+
+	public void setLignes(Collection<ligne> lignes) {
+		this.lignes = lignes;
+	}
+
 	public Long getId() {
 		return id;
 	}

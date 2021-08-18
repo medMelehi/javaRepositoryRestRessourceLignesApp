@@ -1,12 +1,15 @@
 package com.sid.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
@@ -23,6 +26,8 @@ public class site implements Serializable {
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date dateIn;
 	   private Boolean actif;
+	   @OneToMany(mappedBy="site",fetch=FetchType.LAZY)
+		private Collection<ligne> lignes; 
 
 	public site(String nom, String adresse, String etat, Date dateOuverture, Date dateFermeture, Date dateIn, Date dateOut,
 			Boolean actif) {
@@ -34,6 +39,14 @@ public class site implements Serializable {
 		this.dateFermeture = dateFermeture;
 		this.dateIn = dateIn;
 		this.actif = actif;
+	}
+	
+	public Collection<ligne> getLignes() {
+		return lignes;
+	}
+
+	public void setLignes(Collection<ligne> lignes) {
+		this.lignes = lignes;
 	}
 
 	public Long getId() {

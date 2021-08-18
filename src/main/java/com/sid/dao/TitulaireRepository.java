@@ -31,7 +31,7 @@ public interface TitulaireRepository extends JpaRepository<titulaire,Long>{
 	public Page<titulaire> findByEmailContains(@Param("email") String email,Pageable pageable );
 	
 	@RestResource(path = "/byNomMat")
-	public List<titulaire> findByNomAndMatriculeContains(@Param("nom") String nom,@Param("mat") String matricule);
+	public List<titulaire> findByNomContainsAndMatriculeContains(@Param("nom") String nom,@Param("mat") String matricule);
 	@RestResource(path = "/byNomMatPage")
 	public Page<titulaire> findByNomAndMatriculeContains(@Param("nom") String nom,@Param("mat") String matricule,Pageable pageable );
 	
@@ -46,7 +46,7 @@ public interface TitulaireRepository extends JpaRepository<titulaire,Long>{
 	public Page<titulaire> findByMatriculeAndEmailContains(@Param("mat") String matricule,@Param("email") String email,Pageable pageable );
 	
 	@RestResource(path = "/byNomEmailMat")
-	public List<titulaire> findByNomAndEmailAndMatriculeContains(@Param("nom") String nom,@Param("Email") String Email,@Param("mat") String matricule);
+	public List<titulaire> findByNomContainsAndEmailContainsAndMatriculeContains(@Param("nom") String nom,@Param("email") String Email,@Param("mat") String matricule);
 	@RestResource(path = "/byNomEmailMatPage")
-	public Page<titulaire> findByNomAndEmailAndMatriculeContains(@Param("nom") String nom,@Param("Email") String Email,@Param("mat") String matricule,Pageable pageable );
+	public Page<titulaire> findByNomContainsAndEmailContainsAndMatriculeContains(@Param("nom") String nom,@Param("email") String Email,@Param("mat") String matricule,Pageable pageable );
 }

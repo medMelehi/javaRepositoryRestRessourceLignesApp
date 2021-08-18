@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.sid.entities.site;
 import com.sid.entities.telephone;
+import com.sid.entities.titulaire;
 @CrossOrigin("*")
 @RepositoryRestResource
 public interface SiteRepository extends JpaRepository<site, Long> {
@@ -30,5 +31,10 @@ public interface SiteRepository extends JpaRepository<site, Long> {
 	public List<site> findByAdresseContains(@Param("mc") String add);
 	@RestResource(path = "/byAdressePage")
 	public Page<site> findByAdresseContains(@Param("mc") String add,Pageable pageable );
+	
+	@RestResource(path = "/byNomAdresseEtat")
+	public List<site> findByNomContainsAndAdresseContainsAndEtatContains(@Param("nom") String nom,@Param("adresse") String Adresse,@Param("etat") String Etat);
+	@RestResource(path = "/byNomAdresseEtatPage")
+	public Page<site> findByNomContainsAndAdresseContainsAndEtatContains(@Param("nom") String nom,@Param("adresse") String Adresse,@Param("etat") String Etat,Pageable pageable );
 
 }

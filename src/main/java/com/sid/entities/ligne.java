@@ -1,42 +1,111 @@
 package com.sid.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
 public class ligne implements Serializable{
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	
+		@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Long id;
 	   private String operateur;
 	   private String numLigne;
-	   private int idGroup;
-	   private int idCategorie;
-	   private int idProduit;
-	   private int idTitulaire;
-	   private int idSite;
+	   @ManyToOne
+	   @JoinColumn(name = "id_produit")
+	   private produit produit;
+	   @ManyToOne
+	   @JoinColumn(name = "id_titulaire")
+	   private titulaire titulaire;
+	   @ManyToOne
+	   @JoinColumn(name = "id_site")
+	   private site site;
+	   @ManyToOne
+	   @JoinColumn(name = "id_groupe")
+	   private groupe groupe;
+	   @ManyToOne
+	   @JoinColumn(name = "id_cat")
+	   private categorie categorie;
+	   
+	   @OneToMany(mappedBy="ligne",fetch=FetchType.LAZY)
+		private Collection<evenement> evenements; 
+		
+		@OneToMany(mappedBy="ligne",fetch=FetchType.LAZY)
+		private Collection<facture> factures; 
+		
+		@OneToMany(mappedBy="ligne",fetch=FetchType.LAZY)
+		private Collection<reengagement> reengagements; 
+
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date dateActivation;
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date dateDesactivation;
-	
-	   public ligne(String operateur,  String numLigne, int idGroup, int idCategorie, int idProduit,
-			int idTitulaire, int idSite, Date dateActivation, Date dateDesactivation) {
+	   
+	   public ligne(String operateur,  String numLigne, Date dateActivation, Date dateDesactivation) {
 		super();
 		this.operateur = operateur;
 		this.numLigne = numLigne;
-		this.idGroup = idGroup;
-		this.idCategorie = idCategorie;
-		this.idProduit = idProduit;
-		this.idTitulaire = idTitulaire;
-		this.idSite = idSite;
 		this.dateActivation = dateActivation;
 		this.dateDesactivation = dateDesactivation;
+	}
+		public ligne() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		
+	   
+		
+	public Collection<evenement> getEvenements() {
+			return evenements;
+		}
+		public void setEvenements(Collection<evenement> evenements) {
+			this.evenements = evenements;
+		}
+		public Collection<facture> getFactures() {
+			return factures;
+		}
+		public void setFactures(Collection<facture> factures) {
+			this.factures = factures;
+		}
+		public Collection<reengagement> getReengagements() {
+			return reengagements;
+		}
+		public void setReengagements(Collection<reengagement> reengagements) {
+			this.reengagements = reengagements;
+		}
+	public produit getProduit() {
+			return produit;
+		}
+		public void setProduit(produit produit) {
+			this.produit = produit;
+		}
+		public titulaire getTitulaire() {
+			return titulaire;
+		}
+		public void setTitulaire(titulaire titulaire) {
+			this.titulaire = titulaire;
+		}
+		public site getSite() {
+			return site;
+		}
+		public void setSite(site site) {
+			this.site = site;
+		}
+	public categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(categorie categorie) {
+		this.categorie = categorie;
 	}
 	public Long getId() {
 		return id;
@@ -57,36 +126,15 @@ public class ligne implements Serializable{
 	public void setNumLigne(String numLigne) {
 		this.numLigne = numLigne;
 	}
-	public int getIdGroup() {
-		return idGroup;
+
+	
+	public groupe getGroupe() {
+		return groupe;
 	}
-	public void setIdGroup(int idGroup) {
-		this.idGroup = idGroup;
+	public void setGroupe(groupe groupe) {
+		this.groupe = groupe;
 	}
-	public int getIdCategorie() {
-		return idCategorie;
-	}
-	public void setIdCategorie(int idCategorie) {
-		this.idCategorie = idCategorie;
-	}
-	public int getIdProduit() {
-		return idProduit;
-	}
-	public void setIdProduit(int idProduit) {
-		this.idProduit = idProduit;
-	}
-	public int getIdTitulaire() {
-		return idTitulaire;
-	}
-	public void setIdTitulaire(int idTitulaire) {
-		this.idTitulaire = idTitulaire;
-	}
-	public int getIdSite() {
-		return idSite;
-	}
-	public void setIdSite(int idSite) {
-		this.idSite = idSite;
-	}
+	
 	public java.util.Date getDateActivation() {
 		return dateActivation;
 	}
@@ -98,10 +146,6 @@ public class ligne implements Serializable{
 	}
 	public void setDateDesactivation(java.util.Date dateDesactivation) {
 		this.dateDesactivation = dateDesactivation;
-	}
-	public ligne() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	   

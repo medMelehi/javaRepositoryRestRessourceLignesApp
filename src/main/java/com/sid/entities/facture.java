@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
 public class facture implements Serializable{
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	   private int idLigne;
 	   private int mois;
 	   private int annee;
 	   private java.lang.Double ttc;
@@ -21,10 +22,12 @@ public class facture implements Serializable{
 	   private java.lang.String comment;
 	  @Temporal(TemporalType.DATE)
 	   private java.util.Date dateIn;
+	  @ManyToOne
+	   @JoinColumn(name = "id_ligne")
+	   private ligne ligne;
 	
-	   public facture(int idLigne, int mois, int annee, Double ttc, Double ht, String comment, Date dateIn) {
+	   public facture( int mois, int annee, Double ttc, Double ht, String comment, Date dateIn) {
 		super();
-		this.idLigne = idLigne;
 		this.mois = mois;
 		this.annee = annee;
 		this.ttc = ttc;
@@ -32,18 +35,22 @@ public class facture implements Serializable{
 		this.comment = comment;
 		this.dateIn = dateIn;
 	}
+	   
+	public ligne getLigne() {
+		return ligne;
+	}
+
+	public void setLigne(ligne ligne) {
+		this.ligne = ligne;
+	}
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getIdLigne() {
-		return idLigne;
-	}
-	public void setIdLigne(int idLigne) {
-		this.idLigne = idLigne;
-	}
+
 	public int getMois() {
 		return mois;
 	}

@@ -1,12 +1,15 @@
 package com.sid.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
@@ -23,10 +26,25 @@ public class titulaire implements Serializable {
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date dateSortie;
 	   private java.lang.String motifSortie;
-	   private int idTelephone;
+	   
+	   @OneToMany(mappedBy="titulaire",fetch=FetchType.LAZY)
+		private Collection<ligne> lignes;
+		
+		@OneToMany(mappedBy="titulaire",fetch=FetchType.LAZY)
+		private Collection<reengagement> reengagements; 
+		
+		@OneToMany(mappedBy="titulaire",fetch=FetchType.LAZY)
+		private Collection<telephone> telephones; 
+		
+		@OneToMany(mappedBy="titulaire",fetch=FetchType.LAZY)
+		private Collection<contrat_tel> telContrats;
+		
+		
+		 
+		
 	
 	   public titulaire(String matricule, String nom, String prenom, String email, String typeContrat,
-			Date dateRecrutement, Date dateSortie, String motifSortie, int idTelephone) {
+			Date dateRecrutement, Date dateSortie, String motifSortie) {
 		super();
 		this.matricule = matricule;
 		this.nom = nom;
@@ -36,8 +54,49 @@ public class titulaire implements Serializable {
 		this.dateRecrutement = dateRecrutement;
 		this.dateSortie = dateSortie;
 		this.motifSortie = motifSortie;
-		this.idTelephone = idTelephone;
+		
 	}
+	   
+
+	public Collection<ligne> getLignes() {
+		return lignes;
+	}
+
+
+	public void setLignes(Collection<ligne> lignes) {
+		this.lignes = lignes;
+	}
+
+
+	public Collection<reengagement> getReengagements() {
+		return reengagements;
+	}
+
+
+	public void setReengagements(Collection<reengagement> reengagements) {
+		this.reengagements = reengagements;
+	}
+
+
+	public Collection<telephone> getTelephones() {
+		return telephones;
+	}
+
+
+	public void setTelephones(Collection<telephone> telephones) {
+		this.telephones = telephones;
+	}
+
+
+	public Collection<contrat_tel> getTelContrats() {
+		return telContrats;
+	}
+
+
+	public void setTelContrats(Collection<contrat_tel> telContrats) {
+		this.telContrats = telContrats;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -99,6 +158,7 @@ public class titulaire implements Serializable {
 		return dateSortie;
 	}
 
+	
 	public void setDateSortie(java.util.Date dateSortie) {
 		this.dateSortie = dateSortie;
 	}
@@ -111,13 +171,6 @@ public class titulaire implements Serializable {
 		this.motifSortie = motifSortie;
 	}
 
-	public int getIdTelephone() {
-		return idTelephone;
-	}
-
-	public void setIdTelephone(int idTelephone) {
-		this.idTelephone = idTelephone;
-	}
 
 	public titulaire() {
 		super();

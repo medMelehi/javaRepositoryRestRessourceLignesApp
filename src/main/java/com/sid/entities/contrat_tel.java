@@ -7,42 +7,52 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
 public class contrat_tel implements Serializable{
 	@Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	   private int idTel;
-	   private int idTitulaire;
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date date;
+	   @ManyToOne
+	   @JoinColumn(name = "id_tel")
+	   private telephone telephone;
+	   @ManyToOne
+	   @JoinColumn(name = "id_titulaire")
+	   private titulaire titulaire;
 	   
 	   
-	public contrat_tel(int idTel, int idTitulaire, Date date) {
+	public contrat_tel( Date date) {
 		super();
-		this.idTel = idTel;
-		this.idTitulaire = idTitulaire;
 		this.date = date;
 	}
+	
+	public telephone getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(telephone telephone) {
+		this.telephone = telephone;
+	}
+
+	public titulaire getTitulaire() {
+		return titulaire;
+	}
+
+	public void setTitulaire(titulaire titulaire) {
+		this.titulaire = titulaire;
+	}
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getIdTel() {
-		return idTel;
-	}
-	public void setIdTel(int idTel) {
-		this.idTel = idTel;
-	}
-	public int getIdTitulaire() {
-		return idTitulaire;
-	}
-	public void setIdTitulaire(int idTitulaire) {
-		this.idTitulaire = idTitulaire;
-	}
+
 	public java.util.Date getDate() {
 		return date;
 	}

@@ -1,12 +1,17 @@
 package com.sid.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
@@ -23,6 +28,13 @@ public class telephone implements Serializable{
 	   @Temporal(TemporalType.DATE)
 	   private java.util.Date dateOut;
 	   
+	   @OneToMany(mappedBy="telephone",fetch=FetchType.LAZY)
+		private Collection<contrat_tel> telContrats; 
+		
+		 @ManyToOne
+		   @JoinColumn(name = "id_titulaire")
+		   private titulaire titulaire;
+	   
 	   public telephone(String imei, String marque, String model, String etat, Boolean fix, Date dateIn, Date dateOut) {
 			super();
 			this.imei = imei;
@@ -33,6 +45,22 @@ public class telephone implements Serializable{
 			this.dateIn = dateIn;
 			this.dateOut = dateOut;
 		}
+
+	public Collection<contrat_tel> getTelContrats() {
+		return telContrats;
+	}
+
+	public void setTelContrats(Collection<contrat_tel> telContrats) {
+		this.telContrats = telContrats;
+	}
+
+	public titulaire getTitulaire() {
+		return titulaire;
+	}
+
+	public void setTitulaire(titulaire titulaire) {
+		this.titulaire = titulaire;
+	}
 
 	public Long getId() {
 		return id;
